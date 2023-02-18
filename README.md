@@ -16,7 +16,7 @@
  <li>escolher uma letra</li>
  <li>Marca letras incorretas</li>
  <li>Aviso de vitória</li>
- <li>Aviso de derrota/li>
+ <li>Aviso de derrota</li>
 </ul>
 
 <p>Segue deploy do projeto</p>
