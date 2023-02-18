@@ -53,3 +53,36 @@ function ocultaPalavra(){
 function exibePalavaInterface(palavra){
     palavraInterface.innerHTML = palavra;
 };
+
+
+function tentativa(letra){
+    if(palavraProposta.includes(letra)){
+        atualizarPalavraInterface(letra);
+    }else{
+        letrasErradasArray.push(letra);
+        letrasErradas.innerHTML = "Letras erradas: " + letrasErradasArray;
+        
+    }
+};
+
+function atualizarPalavraInterface(letra){
+    let palavraAux = "";
+    for(let i = 0; i < palavraProposta.length; i++){
+        if(palavraProposta[i] === letra){
+
+            palavraAux += letra;
+        }else if(palavraInterface.innerHTML[i] != "-"){
+            palavraAux += palavraInterface.innerHTML[i];
+        }else{
+            palavraAux += "-";
+        }
+    }
+
+    exibePalavaInterface(palavraAux);
+
+};
+
+
+function retornaLetra(e){
+    tentativa(e.key);
+};
