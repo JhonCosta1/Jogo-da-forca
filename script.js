@@ -1,6 +1,6 @@
 const categoria = document.querySelector("#category");
 const letrasErradas = document.querySelector(".wrongLetters");
-   const palavraInterface = document.querySelector(".dashes");
+const palavraInterface = document.querySelector(".dashes");
 const olhos = Array.from(document.querySelectorAll(".eyes"));
 
 let partesBoneco = Array.from(document.querySelectorAll("#person div"));
@@ -16,9 +16,6 @@ const numTentativas = 7;
 
 const opacidadeOlhos = 0.3;
 
-
-//Criando categorias
-
 const categorias = {
     frutas: ["manga", "banana", "melao", "goiaba", "pera", "uva", "melancia", "laranja"],
     profissoes: ["desenvolvedor", "advogado", "telefonista", "motorista", "suporte", "medico", "professor"],
@@ -28,29 +25,30 @@ const categorias = {
 
 function retornaArrayCategorias(){
     return Object.keys(categorias);
-};
+}
 
 function retornaCategoria(){
     const arrayCategorias = retornaArrayCategorias();
     let indiceCategoria = Math.floor(Math.random() * arrayCategorias.length);
     return arrayCategorias[indiceCategoria];
-};
+}
 
 function exibeCategoria(){
     categoria.innerHTML = retornaCategoria();
-};
+}
 
 function retornaNumAleatorio(max){
     return Math.floor(Math.random() * max);
-};
+}
 
 function definePalavraProposta(){
     const arrayPalavras = categorias[categoria.innerHTML];
-    let indicePalavra = retornaNumAleatorio(arrayPalvras.length);
+    console.log('Categoria:', categoria.innerHTML);
+    console.log('Palavras:', arrayPalavras);
+    let indicePalavra = retornaNumAleatorio(arrayPalavras.length);
     palavraProposta = arrayPalavras[indicePalavra];
     ocultaPalavra();
 };
-
 
 function ocultaPalavra(){
     let palavraOcultada = "";
@@ -58,28 +56,25 @@ function ocultaPalavra(){
         palavraOcultada += "-";
     }
     exibePalavaInterface(palavraOcultada);
-};
+}
 
 function exibePalavaInterface(palavra){
     palavraInterface.innerHTML = palavra;
-};
-
+}
 
 function tentativa(letra){
-    if(palavraProposta.includes(letra)){
+    if(palavraProposta && palavraProposta.includes(letra)){
         atualizarPalavraInterface(letra);
     }else{
         letrasErradasArray.push(letra);
         letrasErradas.innerHTML = "Letras erradas: " + letrasErradasArray;
-
     }
-};
+}
 
 function atualizarPalavraInterface(letra){
     let palavraAux = "";
     for(let i = 0; i < palavraProposta.length; i++){
         if(palavraProposta[i] === letra){
-
             palavraAux += letra;
         }else if(palavraInterface.innerHTML[i] != "-"){
             palavraAux += palavraInterface.innerHTML[i];
@@ -87,19 +82,16 @@ function atualizarPalavraInterface(letra){
             palavraAux += "-";
         }
     }
-
     exibePalavaInterface(palavraAux);
-
-};
-
+}
 
 function retornaLetra(e){
     tentativa(e.key);
-};
+}
 
 function desenhaBoneco(){
     partesBoneco[indiceBoneco].classList.remove("hide");
-    indiceBoneco++; 
+    indiceBoneco++;
 }
 
 function desenhaOlhos(){
@@ -108,7 +100,6 @@ function desenhaOlhos(){
         olho.style.zIndex = 10;
     }));
 }
-
 
 function ocultaBoneco(){
     olhos.forEach((olho => {
@@ -123,7 +114,12 @@ function iniciaJogo(){
     indiceBoneco = 0;
     letrasErradasArray = [];
     letrasErradas.innerHTML = "Letras erradas: ";
+    definePalavraProposta();
     window.addEventListener("keypress", retornaLetra);
 }
+
+desenhaOlhos();
+ocultaBoneco();
+iniciaJogo();
 
 window.addEventListener("load", iniciaJogo);
